@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface IGameRepository {
     // Get games from db
     fun getGames(): Flow<List<Game>>
+    fun getGameById(gameId: String): Flow<Game>
     fun filterBy(toSearch: String, filter: GameFilters): Flow<List<Game>>
     suspend fun delete(game: Game)
     suspend fun insert(vararg games: Game)

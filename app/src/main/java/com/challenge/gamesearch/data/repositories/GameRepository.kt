@@ -23,6 +23,10 @@ class GameRepository @Inject constructor(
         }
     }
 
+    override fun getGameById(gameId: String): Flow<Game>  = gameDao.getGamesById(gameId).map { game ->
+        game.toDomain()
+    }
+
     override fun filterBy(toSearch: String, filter: GameFilters): Flow<List<Game>> {
         // TODO: use abstraction for logging
         Log.d("INFO", "Filtering | Filter: $filter | query: $toSearch")
@@ -32,6 +36,7 @@ class GameRepository @Inject constructor(
             GameFilters.Platform -> filterByPlatform(toSearch)
             GameFilters.Developer -> filterByDeveloper(toSearch)
             GameFilters.Publisher -> filterByPublisher(toSearch)
+            else -> getGames()
         }
     }
 
@@ -68,7 +73,6 @@ class GameRepository @Inject constructor(
 
         return null
     }
-
 
     private fun filterByTitle(title: String): Flow<List<Game>> =
         gameDao.filterByTitle(title).map { games ->
@@ -111,5 +115,6 @@ enum class GameFilters {
     Genre,
     Platform,
     Developer,
-    Publisher
+    Publisher,
+    All
 }

@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.challenge.gamesearch.ui.GameNavHost
 import com.challenge.gamesearch.ui.GameSearchView
 import com.challenge.gamesearch.ui.theme.GameSearchTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,9 +29,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             GameSearchTheme {
                 Scaffold { innerPadding ->
-                    GameSearchView(modifier = Modifier.padding(innerPadding))
+                    GameNavHost(modifier = Modifier.padding(innerPadding), navController)
                 }
             }
         }
