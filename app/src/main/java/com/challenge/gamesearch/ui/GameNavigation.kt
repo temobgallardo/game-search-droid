@@ -6,9 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navOptions
 import com.challenge.gamesearch.ui.viewmodels.GameDetailsViewModel
-import com.challenge.gamesearch.ui.viewmodels.GameSearchViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -23,13 +21,15 @@ fun NavController.navigateToGameDetails(gameId: String, navigation: NavOptions? 
     navigate(GameNavigation.Game(gameId), navigation )
 }
 
-fun NavGraphBuilder.gameDetailsScreen(){
+fun NavGraphBuilder.gameDetailsScreen(navigateBack: () -> Unit){
     composable<GameNavigation.Game>{
         val viewModel : GameDetailsViewModel = hiltViewModel<GameDetailsViewModel>()
-        val uiState = viewModel.stateGameDetails.collectAsStateWithLifecycle().value
+        val uiState = viewModel.gameDetailStates.collectAsStateWithLifecycle().value
 
         GameDetailsView(
-            gameDetailsStates = uiState
+            gameDetailStates = uiState,
+            viewModel = viewModel,
+            navigateBack = navigateBack
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.challenge.gamesearch.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.challenge.gamesearch.data.repositories.GameFilters
@@ -56,12 +57,14 @@ class GameSearchViewModel @Inject constructor(private val gameRepository: IGameR
         if (name.isEmpty()) {
             _gamesUiStates.update { state -> state.copy(games = games, error = null) }
         } else {
-            val games = _gamesUiStates.value.games.filter { it.title.contains(name, ignoreCase = true) }
+            val games =
+                _gamesUiStates.value.games.filter { it.title.contains(name, ignoreCase = true) }
             _gamesUiStates.update { state -> state.copy(games = games, error = null) }
         }
     }
 
     private fun filterBySubCategory(subCategory: String?) {
+        Log.d("INFO", "Game States | Subcategory Selected = ${_gamesUiStates.value.subCategorySelected} | Actual = $subCategory")
         if (subCategory == null) {
             _gamesUiStates.update { state ->
                 state.copy(

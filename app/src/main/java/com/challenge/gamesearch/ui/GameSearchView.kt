@@ -35,9 +35,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,7 +53,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
@@ -62,7 +61,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.ContentAlpha
 import androidx.wear.compose.material.LocalContentAlpha
 import coil.compose.rememberAsyncImagePainter
-import com.challenge.gamesearch.data.repositories.GameFilters
 import com.challenge.gamesearch.domain.models.Game
 import com.challenge.gamesearch.ui.viewmodels.GameListEvent
 import com.challenge.gamesearch.ui.viewmodels.GameSearchViewModel
@@ -130,13 +128,12 @@ fun GameSearchView(
 }
 
 @Composable
-fun TabsForMainFilters(onClick: (String) -> Unit, specificTabs: List<String>) {
+fun TabsForMainFilters(onClick: (String) -> Unit, tabs: List<String>) {
     val selectedIndex = remember { mutableIntStateOf(0) }
-    val tabs = specificTabs
 
-    if (specificTabs.isEmpty()) return
+    if (tabs.isEmpty()) return
 
-    TabRow(selectedTabIndex = selectedIndex.intValue,
+    ScrollableTabRow(selectedTabIndex = selectedIndex.intValue,
         containerColor = Color.Transparent,
         contentColor = Color(0xFFFEFEFA),
         indicator = {
@@ -147,10 +144,12 @@ fun TabsForMainFilters(onClick: (String) -> Unit, specificTabs: List<String>) {
                     .background(Color.Black)
             )
         }) {
-        specificTabs.forEachIndexed { index, tab ->
+        tabs.forEachIndexed { index, tab ->
             Tab(
                 selected = selectedIndex.intValue == index,
-                onClick = { selectedIndex.intValue = index },
+                onClick = {
+                    onClick.invoke(tabs[index])
+                },
             ) {
                 Text(
                     text = tab,
@@ -160,7 +159,6 @@ fun TabsForMainFilters(onClick: (String) -> Unit, specificTabs: List<String>) {
         }
     }
 
-   onClick.invoke(tabs[selectedIndex.intValue])
 }
 
 @Composable

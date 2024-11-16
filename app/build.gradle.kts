@@ -85,6 +85,9 @@ dependencies {
 
     //Coil
     implementation(libs.coil.compose)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.test)
 }
 
 kapt {

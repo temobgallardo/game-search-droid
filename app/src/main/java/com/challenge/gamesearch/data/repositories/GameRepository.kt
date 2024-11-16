@@ -23,22 +23,10 @@ class GameRepository @Inject constructor(
         }
     }
 
-    override fun getGameById(gameId: String): Flow<Game>  = gameDao.getGamesById(gameId).map { game ->
-        game.toDomain()
-    }
-
-    override fun filterBy(toSearch: String, filter: GameFilters): Flow<List<Game>> {
-        // TODO: use abstraction for logging
-        Log.d("INFO", "Filtering | Filter: $filter | query: $toSearch")
-        return when (filter) {
-            GameFilters.Title -> filterByTitle(toSearch)
-            GameFilters.Genre -> filterByGenre(toSearch)
-            GameFilters.Platform -> filterByPlatform(toSearch)
-            GameFilters.Developer -> filterByDeveloper(toSearch)
-            GameFilters.Publisher -> filterByPublisher(toSearch)
-            else -> getGames()
+    override fun getGameById(gameId: String): Flow<Game?> =
+        gameDao.getGamesById(gameId).map { game ->
+            game?.toDomain()
         }
-    }
 
     override suspend fun delete(game: Game) {
         gameDao.delete(game.toEntity())

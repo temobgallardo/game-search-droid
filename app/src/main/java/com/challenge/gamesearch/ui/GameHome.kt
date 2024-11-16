@@ -7,11 +7,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 object GameHome
 
-fun NavGraphBuilder.gameHome(navigateToGameDetails: (gameId: String) -> Unit){
-    composable<GameHome>{
-//        val viewModel : GameDetailsViewModel = hiltViewModel<GameSearchViewModel>()
-//        val uiState = viewModel..collectAsStateWithLifecycle().value
-
+fun NavGraphBuilder.gameHome(navigateToGameDetails: (gameId: String) -> Unit) {
+    composable<GameHome> {
         GameSearchView(navigateToGameDetails = navigateToGameDetails)
     }
 }
