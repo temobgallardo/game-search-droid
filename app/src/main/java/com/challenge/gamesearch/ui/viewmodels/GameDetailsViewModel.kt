@@ -61,108 +61,46 @@ class GameDetailsViewModel @Inject constructor(
     }
 
     private fun updateGameTitle(title: String) {
-        val actual = _GameDetailStates.value.game
-        val updated = Game(
-            actual?.id ?: "",
-            title,
-            actual?.thumbnail ?: "",
-            actual?.description ?: "",
-            actual?.url ?: "",
-            actual?.genre ?: "",
-            actual?.platform ?: "",
-            actual?.publisher ?: "",
-            actual?.developer ?: "",
-            actual?.freeToGameUrl ?: ""
-        )
         _GameDetailStates.update { state ->
-            state.copy(game = updated)
+            state.copy(game = _GameDetailStates.value.game?.copy(title = title))
         }
+        updateGame(_GameDetailStates.value.game)
     }
 
     private fun updateGamePublisher(publisher: String) {
-        val actual = _GameDetailStates.value.game
-        val updated = Game(
-            actual?.id ?: "",
-            actual?.title ?: "",
-            actual?.thumbnail ?: "",
-            actual?.description ?: "",
-            actual?.url ?: "",
-            actual?.genre ?: "",
-            actual?.platform ?: "",
-            publisher,
-            actual?.developer ?: "",
-            actual?.freeToGameUrl ?: ""
-        )
         _GameDetailStates.update { state ->
-            state.copy(game = updated)
+            state.copy(game = _GameDetailStates.value.game?.copy(publisher = publisher))
         }
+        updateGame(_GameDetailStates.value.game)
     }
 
     private fun updateGamePlatform(platform: String) {
-        val actual = _GameDetailStates.value.game
-        val updated = Game(
-            actual?.id ?: "",
-            actual?.title ?: "",
-            actual?.thumbnail ?: "",
-            actual?.description ?: "",
-            actual?.url ?: "",
-            actual?.genre ?: "",
-            platform,
-            actual?.publisher ?: "",
-            actual?.developer ?: "",
-            actual?.freeToGameUrl ?: ""
-        )
         _GameDetailStates.update { state ->
-            state.copy(game = updated)
+            state.copy(game = _GameDetailStates.value.game?.copy(platform = platform))
         }
+        updateGame(_GameDetailStates.value.game)
     }
 
     private fun updateGameGenre(genre: String) {
-        val actual = _GameDetailStates.value.game
-        val updated = Game(
-            actual?.id ?: "",
-            actual?.title ?: "",
-            actual?.thumbnail ?: "",
-            actual?.description ?: "",
-            actual?.url ?: "",
-            genre,
-            actual?.platform ?: "",
-            actual?.publisher ?: "",
-            actual?.developer ?: "",
-            actual?.freeToGameUrl ?: ""
-        )
         _GameDetailStates.update { state ->
-            state.copy(game = updated)
+            state.copy(game = _GameDetailStates.value.game?.copy(genre = genre))
         }
+        updateGame(_GameDetailStates.value.game)
     }
 
     private fun updateGameDeveloper(developer: String) {
-        val actual = _GameDetailStates.value.game
-        val updated = Game(
-            actual?.id ?: "",
-            actual?.title ?: "",
-            actual?.thumbnail ?: "",
-            actual?.description ?: "",
-            actual?.url ?: "",
-            actual?.genre ?: "",
-            actual?.platform ?: "",
-            actual?.publisher ?: "",
-            developer,
-            actual?.freeToGameUrl ?: ""
-        )
         _GameDetailStates.update { state ->
-            state.copy(game = updated)
+            state.copy(game = _GameDetailStates.value.game?.copy(developer = developer))
         }
+        updateGame(_GameDetailStates.value.game)
     }
 
     private fun updateGameDescription(description: String) {
-        val actual = _GameDetailStates.value.game
         _GameDetailStates.update { state ->
             state.copy(game = _GameDetailStates.value.game?.copy(description = description))
         }
         updateGame(_GameDetailStates.value.game)
     }
-
 
     private fun initilizeStates() {
         viewModelScope.launch {
