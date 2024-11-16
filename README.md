@@ -15,8 +15,8 @@ The application is developed using Kotlin for Android OS. It also includes the f
 - Navigation Compose: A streamlined approach to handling app navigation within Jetpack Compose.
 
 For testing:
-- MockK
-- kotlinx coroutines test 
+- MockK: A modern mocking library for Kotlin, providing an extensive set of features to create and manage mock objects for unit testing.
+- Kotlinx.coroutines.test: A set of utilities for testing code that uses Kotlin coroutines, allowing for controlled execution and verification of coroutine behavior.
 
 ### Prerequisite
 - Kotlin
